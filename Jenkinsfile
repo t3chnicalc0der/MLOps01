@@ -16,7 +16,7 @@ pipeline {
                 // Pytest and Lint code
                 script {
                     echo 'Testing and Linting Python Code...'
-                    sh "python --version"
+                    sh "python -m pip install -r requirements.txt"
                 }
             }
         }
