@@ -17,6 +17,10 @@ pipeline {
                 script {
                     echo 'Testing and Linting Python Code...'
                     sh "python -m pip install --break-system-packages -r requirements.txt"
+                    sh "pylint app.py train.py"
+                    sh "flake8 app.py train.py"
+                    sh "black app.py train.py"
+                    sh "pytest tests/"
                 }
             }
         }
