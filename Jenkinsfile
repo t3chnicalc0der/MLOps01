@@ -7,6 +7,7 @@ pipeline {
                 // Clone Repository
                 script {
                     echo 'Cloning GitHub Repository...'
+                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'mlops-git-token', url: 'https://github.com/iQuantC/MLOps01.git']])
                 }
             }
         }
