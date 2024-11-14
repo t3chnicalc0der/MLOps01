@@ -16,7 +16,7 @@ pipeline {
                 // Pytest and Lint code
                 script {
                     echo 'Testing and Linting Python Code...'
-                    python --version
+                    sh "python --version"
                 }
             }
         }
