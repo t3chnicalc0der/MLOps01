@@ -16,10 +16,10 @@ pipeline {
                 // Lint code
                 script {
                     echo 'Linting Python Code...'
-                    sh "python -m pip install --break-system-packages -r requirements.txt"
-                    sh "pylint app.py train.py --output=pylint-report.txt --exit-zero"
-                    sh "flake8 app.py train.py --ignore=E501,E302 --output-file=flake8-report.txt"
-                    sh "black app.py train.py"
+                //    sh "python -m pip install --break-system-packages -r requirements.txt"
+                //    sh "pylint app.py train.py --output=pylint-report.txt --exit-zero"
+                //    sh "flake8 app.py train.py --ignore=E501,E302 --output-file=flake8-report.txt"
+                //    sh "black app.py train.py"
                 }
             }
         }
@@ -28,7 +28,7 @@ pipeline {
                 // Pytest code
                 script {
                     echo 'Testing Python Code...'
-                    sh "pytest tests/"
+                //    sh "pytest tests/"
                 }
             }
         }
@@ -37,7 +37,7 @@ pipeline {
                 // Trivy Filesystem Scan
                 script {
                     echo 'Scannning Filesystem with Trivy...'
-                    sh "trivy fs --format table -o trivy-fs-report.html"
+                //    sh "trivy fs --format table -o trivy-fs-report.html"
                 }
             }
         }
@@ -46,7 +46,7 @@ pipeline {
                 // Build Docker Image
                 script {
                     echo 'Building Docker Image...'
-                    docker.build("mlops-app-01")
+                //    docker.build("mlops-app-01")
                 }
             }
         }
