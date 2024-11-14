@@ -46,7 +46,7 @@ pipeline {
                 // Build Docker Image
                 script {
                     echo 'Building Docker Image...'
-                    sh "docker.build("mlops-app-01:latest")"
+                    sh "docker.build("mlops-app-01")"
                 }
             }
         }
