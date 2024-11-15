@@ -14,14 +14,6 @@ def test_model_prediction():
     assert prediction is not None  # Ensure prediction is not empty
     assert isinstance(prediction[0], (int, np.integer))  # Check if the prediction is an integer (for classification)
 
-""" def test_flask_predict():
-    # Test the Flask app's predict function
-    sample_input = {'sepal_length': 5.1, 'sepal_width': 3.5, 'petal_length': 1.4, 'petal_width': 0.2}
-    result = predict(sample_input)
-    assert result is not None
-    assert result['prediction'] in [0, 1, 2]  # Check if prediction is within the expected class labels
- """
-
 def test_flask_predict():
     # Create a test client for the Flask app
     with app.test_client() as client:
