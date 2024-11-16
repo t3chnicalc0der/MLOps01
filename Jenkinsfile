@@ -79,10 +79,9 @@ pipeline {
                 // Deploy Image to Amazon ECS
                 script {
                     echo 'Deploying to production...'
-
+                        sh "aws ecs update-service --cluster iquant-ecs --service iquant-ecs-svc --force-new-deployment"
                     }
                 }
             }
         }
     }
-}
