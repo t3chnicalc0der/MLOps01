@@ -74,23 +74,12 @@ pipeline {
                 }
             }
         }
-        stage('kubectl'){
-            steps {
-                sh '''
-                    curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-                    chmod +x kubectl
-                    mv kubectl /usr/local/bin/
-                '''
-            }
-        }
         stage('Deploy') {
             steps {
-                // Deploy Image to Amazon EKS
+                // Deploy Image to Amazon ECS
                 script {
                     echo 'Deploying to production...'
-                    kubeconfig(caCertificate: 'LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJUFBqeW05bXgwN2t3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TkRFd01qUXdOVEU1TVRKYUZ3MHpOREV3TWpJd05USTBNVEphTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUUMvWUlLbEtNSStFcitwZTAxS241UkgxWVdkUEh0WlN3dCswZnVKUXQ5YWErNStqcjd6MTJCZjR5dlUKYVZxUERZR2tWUE9PbitlUlpENjhJNmhWL0QyMUhYMnc5R1dxbmFJOWcrQjBrRTFESmhWdlpiSDBqMVd0ano5VQpvS1piNjFzbUN0elYyUE9qcmJKZUxOMlRaRU5VY2V6Uzc4aDFRRHNVTTh4ek9FSnlkRGR2NFVpT0tsbVFuSWF4CmlmRnY1QlRabENadkxVRXJGZXlvRUgxZnFuUXNad0U2MllxVUkxTWwway8wdHN0ajkzbU1lTmJNMXJWZUJsbzIKNk9SUHZzNFFZb0tXZUt4Q3N1YzVsbm1VSEl4OUR3OU9tZmN4UzkvN2lzUU5OMUpaZ2xhTU1OSlBOK2tzTlIrRQphWWU4S2xoVmM3V205SWQybERweXdJL2lTUWhaQWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJRNWdydVlkRGlKYkNpazYvQWcvTko5dHc2MmpEQVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQUhzL216eGYwLwptdHhHRlNOZzhrRGRYTFZYNWFwMWN0TmdueFdQOXh3aklydVZrcU5pa0t5NlZSNlFuL0t0SVBPenZOWDgvc3hsCnlpdm5vVFZHTkVBdkx6c056bWpwYXR4RnFkNlVFUW1Vd2VNMmp6LzgxZFVabHZweEpVbGZOUWFkTVBQeVFrODkKazNQVndoV05aVWtBV2gzQ1FjUXRXalFrQ0RNbHg5RGVHUGp3NGN5MUZUNkR0b29qcGtwQ1VJSlBac2J5amRQQQo2ZDRjc0ZMUU5oYncxUUt5SHdwQ0p5K1Ird1ZYOHdKQVlkcER0bnltcmRRNUtkQlU2OHRlUlREOXdRTGJHamQyCjJkTlBqUkk1amNsWXR1WkFIb1hDdjNGbzBHWi9YV21yeUVpNEVtQzZKS0tTUU5ldmVNUEtuYVFuT1ZQZ0ovUkMKTDZoMlpiZEZ2QWlsCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K', credentialsId: 'kubeconfig', serverUrl: 'https://192.168.64.2:8443') {
-                        sh "kubectl apply -f kubernetes/deployment.yaml"
-                        sh "kubectl apply -f kubernetes/service.yaml"
+
                     }
                 }
             }
