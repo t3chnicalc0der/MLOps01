@@ -79,6 +79,9 @@ pipeline {
                 // Deploy Image to Amazon EKS
                 script {
                     echo 'Deploying to production...'
+                    sh "aws eks update-kubeconfig --name iquant-eks-cluster --region us-east-1"
+                    sh "kubectl apply -f kubernetes/deployment.yaml"
+                    sh "kubectl apply -f kubernetes/service.yaml"
                 }
             }
         }
