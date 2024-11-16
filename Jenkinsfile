@@ -74,6 +74,15 @@ pipeline {
                 }
             }
         }
+        stage('kubectl'){
+            steps {
+                sh '''
+                    curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+                    chmod +x kubectl
+                    mv kubectl /usr/local/bin/
+                '''
+            }
+        }
         stage('Deploy') {
             steps {
                 // Deploy Image to Amazon EKS
