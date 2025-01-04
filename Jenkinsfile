@@ -21,6 +21,8 @@ pipeline {
             steps {
                 script {
                     echo 'Linting Python Code...'
+		    sh "python --version"
+			  
                 }
             }
         }
