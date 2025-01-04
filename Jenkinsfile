@@ -1,9 +1,9 @@
 pipeline {
     agent any
-    environment {
-        DOCKERHUB_CREDENTIAL_ID = 'mlops-jenkins-dockerhub-token'
-        DOCKERHUB_REGISTRY = 'https://registry.hub.docker.com'
-        DOCKERHUB_REPOSITORY = 'iquantc/mlops-proj-01'
+  #  environment {
+   #     DOCKERHUB_CREDENTIAL_ID = 'mlops-jenkins-dockerhub-token'
+    #    DOCKERHUB_REGISTRY = 'https://registry.hub.docker.com'
+     #   DOCKERHUB_REPOSITORY = 'iquantc/mlops-proj-01'
     }
     stages {
         stage('Clone Repository') {
@@ -11,7 +11,7 @@ pipeline {
                 // Clone Repository
                 script {
                     echo 'Cloning GitHub Repository...'
-                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'mlops-git-token', url: 'https://github.com/iQuantC/MLOps01.git']])
+                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'mlops-git-token', url: 'https://github.com/t3chnicalc0der/MLOps01.git']])
                 }
             }
         }
