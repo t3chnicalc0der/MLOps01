@@ -32,6 +32,7 @@ pipeline {
             steps {
                 script {
                     echo 'Testing Python Code...'
+		    sh "pytest tests/"
                 }
             }
         }
