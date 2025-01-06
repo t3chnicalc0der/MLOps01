@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     echo 'Linting Python Code...'
-		    sh "python --version"
+		    sh "python -m pip install -r requirements.txt"
 			  
                 }
             }
