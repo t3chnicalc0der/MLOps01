@@ -40,6 +40,7 @@ pipeline {
             steps {
                 script {
                     echo 'Scanning Filesystem with Trivy...'
+		    sh "trivy fs --format -o trivy-fs-report.html"
                 }
             }
         }
