@@ -1,11 +1,10 @@
 pipeline {
     agent any
     environment {
-    	DOCKERHUB_CREDENTIAL_ID = 'mlops-jenkins-dockerhub-token'
-	DOCKERHUB_REGISTRY = 'https://registry.hub.docker.com'
-	DOCKERHUB_REPOSITORY = 'zakeeakhtar12/mlops-proj-01'
-
-}
+        DOCKERHUB_CREDENTIAL_ID = 'mlops-jenkins-dockerhub-token'
+        DOCKERHUB_REGISTRY = 'https://registry.hub.docker.com'
+        DOCKERHUB_REPOSITORY = 'zakeeakhtar12/mlops-proj-01'
+    }
 
     stages {
         stage('Clone Repository') {
@@ -27,10 +26,10 @@ pipeline {
             steps {
                 script {
                     echo 'Linting Python Code...'
-		    sh "python -m pip install --break-system-packages -r requirements.txt"
-		    sh "pylint app.py train.py --output=pylint-report.txt --exit-zero"
-		    sh "flake8 app.py train.py --ignore=E501,E302 --output-file=flake8-report.txt"
-		    sh "black app.py train.py"	  
+                    sh "python -m pip install --break-system-packages -r requirements.txt"
+                    sh "pylint app.py train.py --output=pylint-report.txt --exit-zero"
+                    sh "flake8 app.py train.py --ignore=E501,E302 --output-file=flake8-report.txt"
+                    sh "black app.py train.py"
                 }
             }
         }
@@ -38,7 +37,7 @@ pipeline {
             steps {
                 script {
                     echo 'Testing Python Code...'
-		    sh "pytest tests/"
+                    sh "pytest tests/"
                 }
             }
         }
@@ -46,38 +45,26 @@ pipeline {
             steps {
                 script {
                     echo 'Scanning Filesystem with Trivy...'
-		    sh "trivy fs --format table --output trivy-fs-report.txt ."
+                    sh "trivy fs --format table --output trivy-fs-report.txt ."
                 }
             }
         }
         stage('Build Docker Image') {
             steps {
                 script {
-		echo 'Building Docker image...'
-		dockerImage = docker.build("${DOCKERHUB_REPOSITORY}:latest")	
+                    echo 'Building Docker image...'
+                    dockerImage = docker.build("${DOCKERHUB_REPOSITORY}:latest")
                 }
             }
         }
-
-/*        stage('Trivy Docker Image Scan') {
-            steps {
-                script {
-                    echo 'Scanning Docker Image with Trivy...'
-
-		    sh "trivy image --input ${DOCKERHUB_REPOSITORY}:latest --format table --output trivy-image-report.txt ."
-
-                }
-            }
-        } 
-*/
-     stage('Push Docker Image') {
+        stage('Push Docker Image') {
             steps {
                 script {
                     echo 'Pushing Docker Image to DockerHub...'
-		    docker.withRegistry('${DOCKERHUB_REGISTRY}', '${DOCKERHUB_CREDENTIAL_ID}') {
-	dockerImage.push('latest')
+                    docker.withRegistry("${DOCKERHUB_REGISTRY}", "${DOCKERHUB_CREDENTIAL_ID}") {
+                        dockerImage.push('latest')
+                    }
                 }
-
             }
         }
         stage('Deploy') {
@@ -90,4 +77,3 @@ pipeline {
     }
 }
 
-}
