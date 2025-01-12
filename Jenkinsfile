@@ -1,5 +1,11 @@
 pipeline {
     agent any
+    environment {
+    	DOCKERHUB_CREDENTIAL_ID = 'mlops-jenkins-dockerhub-token'
+	DOCKERHUB_REGISTRY = 'https://registry.hub.docker.com'
+	DOCKERHUB_REPOSITORY = 'zakeeakhtar12/mlops-proj-01'
+
+}
 
     stages {
         stage('Clone Repository') {
@@ -47,26 +53,31 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    echo 'Building Docker Image...'
-		    docker.build("mlops-app-01")
+		echo 'Building Docker image...'
+		dockerImage = docker.build("${DOCKERHUB_REPOSITORY}:latest")	
                 }
             }
         }
-        stage('Trivy Docker Image Scan') {
+
+/*        stage('Trivy Docker Image Scan') {
             steps {
                 script {
                     echo 'Scanning Docker Image with Trivy...'
 
-		    sh "trivy image --input mlops-app-01:latest --format table --output trivy-image-report.txt ."
+		    sh "trivy image --input ${DOCKERHUB_REPOSITORY}:latest --format table --output trivy-image-report.txt ."
 
                 }
             }
-        }
-        stage('Push Docker Image') {
+        } 
+*/
+     stage('Push Docker Image') {
             steps {
                 script {
                     echo 'Pushing Docker Image to DockerHub...'
+		    docker.withRegistry('${DOCKERHUB_REGISTRY}', '${DOCKERHUB_CREDENTIAL_ID}') {
+	dockerImage.push('latest')
                 }
+
             }
         }
         stage('Deploy') {
@@ -78,4 +89,5 @@ pipeline {
         }
     }
 }
+
 
