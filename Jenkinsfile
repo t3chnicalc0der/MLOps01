@@ -57,7 +57,7 @@ pipeline {
                 script {
                     echo 'Scanning Docker Image with Trivy...'
 
-		    sh "trivy image --input mlops-app-01 --format table --output trivy-image-report.txt"
+		    sh "trivy image --input mlops-app-01:latest --format table --output trivy-image-report.txt"
 
                 }
             }
