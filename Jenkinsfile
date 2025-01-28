@@ -70,7 +70,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    echo 'Deploying to production...'
+                    sh "aws ecs update-service --cluster Mlops-ecs --service mlops-ecs-svc --force-new-deployment"
                 }
             }
         }
